@@ -1,10 +1,19 @@
+networks:
+  laravel:
+    driver: bridge
+
 services:
   jaeger:
-    image: jaegertracing/jaeger:2.2.0
+    image: jaegertracing/jaeger:latest
     container_name: jaeger
     ports:
-      - "16686:16686"
-      - "6831:6831"
+      - "16686:16686" # Jaeger UI
+      - "5778:5778" # Configuration service
+      - "14268:14268" # Thrift HTTP POST
+      - "14250:14250" # gRPC
+      - "4317:4317" # OpenTelemetry gRPC
+      - "4318:4318" # OpenTelemetry HTTP
+      - "9411:9411"
     networks:
       - laravel
 
@@ -20,7 +29,3 @@ services:
       - .:/var/www/html
     networks:
       - laravel
-
-networks:
-  laravel:
-    driver: bridge

@@ -18,11 +18,13 @@ class TraceTestController extends Controller
     {
         // 創建自訂 Span，模擬一個測試操作
         $span = $this->tracer->startSpan('custom-test-api');
+        
         $span->setTag('api.name', '/api/test-trace');
 
         // 模擬邏輯處理
         sleep(2); // 停頓 2 秒，模擬處理時間
         $span->log(['event' => 'test-span-completed']);
+
 
         $span->finish(); // 結束 Span
 
