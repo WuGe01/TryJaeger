@@ -8,16 +8,22 @@ services:
       - "4318:4318"
       - "5778:5778"
       - "9411:9411"
+    networks:
+      - laravel
 
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: laravel_app:latest
-  #   container_name: laravel_app
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - .:/var/www/html
-  #   networks:
-  #     - laravel
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel_app:latest
+    container_name: laravel_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge

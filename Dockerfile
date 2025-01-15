@@ -22,9 +22,7 @@ RUN apt-get update && \
     bcmath \
     gd \
     zip \
-    sockets \
-    && pecl install redis && \
-    docker-php-ext-enable redis
+    sockets
 
 # 安裝 Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -36,7 +34,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # # 生成應用密鑰
-# RUN php artisan key:generate
+RUN php artisan key:generate
 
 # 設定正確的權限
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
