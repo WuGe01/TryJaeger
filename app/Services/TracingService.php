@@ -10,6 +10,7 @@ class TracingService
 
     public function __construct()
     {
+       
         // 初始化 Jaeger
         $config = new Config(
             [
@@ -19,7 +20,7 @@ class TracingService
                     'param' => true, // 開啟追蹤（true: 取樣所有請求）
                 ],
             ],
-            'localhost:6831' // Jaeger Agent 地址，默認為本地 6831
+            'localhost:6831'
         );
 
         // 初始化 Tracer
