@@ -15,6 +15,7 @@ RUN apt-get update && \
     libxml2-dev \
     libpq-dev \
     && docker-php-ext-install \
+    sockets \
     pdo_mysql \
     mbstring \
     exif \
