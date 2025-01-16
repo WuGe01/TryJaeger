@@ -28,7 +28,7 @@ class TraceTestController extends Controller
         $span->finish();
 
         // 刷新數據
-        $this->flush();
+        $this->tracer->flush();
 
         // 返回測試 JSON 數據
         return response()->json([

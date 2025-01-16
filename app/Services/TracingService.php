@@ -10,16 +10,36 @@ class TracingService
 
     public function __construct()
     {
+        // $config = new Config(
+        //     [
+        //         'service_name' => 'laravel_app',
+        //         'dispatch_mode' => Config::JAEGER_OVER_BINARY_UDP, // 選擇 UDP 模式
+        //         'sampler' => [
+        //             'type' => \Jaeger\SAMPLER_TYPE_CONST,
+        //             'param' => true,
+        //         ],
+        //         'local_agent' => [
+        //             'reporting_host' => 'jaeger',
+        //             'reporting_port' => 6831, // UDP 端口
+        //         ],
+        //     ]
+        // );
+
         $config = new Config(
             [
-                'service_name' => 'laravel_app', // Jaeger 中顯示的服務名稱
+                'service_name' => 'laravel_app',
+                'dispatch_mode' => Config::JAEGER_OVER_BINARY_HTTP, // 選擇 HTTP 模式
                 'sampler' => [
-                    'type' => \Jaeger\SAMPLER_TYPE_CONST, // 設定取樣策略
-                    'param' => true, // 開啟追蹤（true: 取樣所有請求）
+                    'type' => \Jaeger\SAMPLER_TYPE_CONST, // 固定取樣
+                    'param' => true, // 打開追蹤取樣
                 ],
-            ],
-            'jaeger:6831'
+                'local_agent' => [
+                    'reporting_host' => 'jaeger',
+                    'reporting_port' => 14268, // HTTP Collector 端口
+                ],
+            ]
         );
+
         $this->tracer = $config->initializeTracer();
     }
 
