@@ -19,25 +19,25 @@ services:
     networks:
       - laravel
 
-app:
-  build:
-    context: .
-    dockerfile: Dockerfile
-  image: laravel_app:latest
-  container_name: laravel_app
-  ports:
-    - "8100:8000"
-  volumes:
-    - .:/var/www/html
-  networks:
-    - laravel
+  laravel_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel_app:latest
+    container_name: laravel_app
+    ports:
+      - "8100:8000"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel
 
-hotrod:
-  image: jaegertracing/example-hotrod:latest
-  container_name: hotrod
-  environment:
-    JAEGER_AGENT_HOST: jaeger
-  ports:
-    - "8084:8080" # HotROD service
-  networks:
-    - laravel
+  hotrod:
+    image: jaegertracing/example-hotrod:latest
+    container_name: hotrod
+    environment:
+      JAEGER_AGENT_HOST: jaeger
+    ports:
+      - "8084:8080" # HotROD service
+    networks:
+      - laravel
