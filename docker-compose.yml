@@ -4,7 +4,7 @@ networks:
 
 services:
   jaeger:
-    image: jaegertracing/jaeger:latest
+    image: jaegertracing/all-in-one:latest
     container_name: jaeger
     ports:
       - "16686:16686" # Jaeger UI
@@ -14,18 +14,30 @@ services:
       - "4317:4317" # OpenTelemetry gRPC
       - "4318:4318" # OpenTelemetry HTTP
       - "9411:9411"
+      - "6831:6831/udp"
+      - "6832:6832/udp" 
     networks:
       - laravel
 
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: laravel_app:latest
-    container_name: laravel_app
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/var/www/html
-    networks:
-      - laravel
+app:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: laravel_app:latest
+  container_name: laravel_app
+  ports:
+    - "8100:8000"
+  volumes:
+    - .:/var/www/html
+  networks:
+    - laravel
+
+hotrod:
+  image: jaegertracing/example-hotrod:latest
+  container_name: hotrod
+  environment:
+    JAEGER_AGENT_HOST: jaeger
+  ports:
+    - "8084:8080" # HotROD service
+  networks:
+    - laravel
