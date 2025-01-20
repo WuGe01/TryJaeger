@@ -11,6 +11,7 @@ use Spatie\Prometheus\Collectors\Horizon\HorizonStatusCollector;
 use Spatie\Prometheus\Collectors\Horizon\JobsPerMinuteCollector;
 use Spatie\Prometheus\Collectors\Horizon\RecentJobsCollector;
 use Spatie\Prometheus\Facades\Prometheus;
+use Illuminate\Support\Facades\Redis;
 
 class PrometheusServiceProvider extends ServiceProvider
 {
@@ -20,10 +21,26 @@ class PrometheusServiceProvider extends ServiceProvider
          * Here you can register all the exporters that you
          * want to export to prometheus
          */
-        Prometheus::addGauge('My gauge')
-            ->value(function() {
-                return 123.45;
+        Prometheus::addGauge('api_requests_total')
+            ->value(function () {
+                return Redis::llen('api_requests_log');
             });
+
+        Prometheus::addGauge('api_requests_detail')
+            ->label('status_code')
+            ->value(function () {
+
+            // 從 Redis 中獲取 status_code 的統計數據
+            $statusCodeKey = 'api_requests_status_code';
+            $statusCodes = Redis::hgetall($statusCodeKey); // 獲取所有 status_code 的統計
+
+            $return = [];
+            foreach ($statusCodes as $key => $statusCode) {
+                $return[] = [ $statusCode, [$key]];
+            }
+
+            return $return;
+        });
 
         /*
          * Uncomment this line if you want to export
