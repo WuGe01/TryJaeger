@@ -73,14 +73,6 @@ services:
       - redis_data:/data
     networks:
       - laravel
-
-  # hotrod:
-  #   image: jaegertracing/example-hotrod:latest
-  #   container_name: hotrod
-  #   environment:
-  #     JAEGER_AGENT_HOST: jaeger
-  #     OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-  #   ports:
-  #     - "8084:8080" # HotROD service
-  #   networks:
-  #     - laravel
+      
+volumes:
+  redis_data:
