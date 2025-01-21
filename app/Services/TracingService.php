@@ -19,7 +19,7 @@ class TracingService
         //             'param' => true,
         //         ],
         //         'local_agent' => [
-        //             'reporting_host' => 'jaeger',
+        //             'reporting_host' => '10.0.0.21',
         //             'reporting_port' => 6831, // UDP 端口
         //         ],
         //     ]
@@ -34,7 +34,7 @@ class TracingService
                     'param' => true, // 打開追蹤取樣
                 ],
                 'local_agent' => [
-                    'reporting_host' => 'jaeger',
+                    'reporting_host' => '10.0.0.21',
                     'reporting_port' => 14268, // HTTP Collector 端口
                 ],
             ]

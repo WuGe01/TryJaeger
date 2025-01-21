@@ -5,4 +5,4 @@ scrape_configs:
   - job_name: 'laravel_app' # 監控 Laravel App
     metrics_path: /prometheus
     static_configs:
-      - targets: ['laravel_app:8000']
+      - targets: ['10.0.0.48']
