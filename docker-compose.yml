@@ -35,6 +35,7 @@ services:
     volumes:
       - ./loki-config.yml:/etc/loki/local-config.yaml # 配置文件
       - ./loki-data:/loki # 數據存儲路徑
+      - ./loki-wal:/loki/wal
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - laravel
