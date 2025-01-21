@@ -32,6 +32,10 @@ services:
     container_name: loki
     ports:
       - "3100:3100" # Loki HTTP API
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml # 配置文件
+      - ./loki-data:/loki # 數據存儲路徑
+    command: -config.file=/etc/loki/local-config.yaml
     networks:
       - laravel
 
